@@ -8,7 +8,7 @@ ENV DATABASE_URL=postgresql://kaizoku:kaizoku@db:5432/kaizoku \
     REDIS_PORT=6379 \
     PUID=99 \
     PGID=100 \
-    TZ=North America/New York
+    TZ=Europe/Istanbul
 
 # Set the working directory in the container
 WORKDIR /app
