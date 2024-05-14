@@ -6,8 +6,8 @@ ENV DATABASE_URL=postgresql://kaizoku:kaizoku@db:5432/kaizoku \
     KAIZOKU_PORT=3010 \
     REDIS_HOST=redis \
     REDIS_PORT=6379 \
-    PUID=<host user puid> \
-    PGID=<host user guid> \
+    PUID=99 \
+    PGID=100 \
     TZ=North America/New York
 
 # Set the working directory in the container
@@ -27,10 +27,6 @@ COPY . /app/
 
 # Expose the port the app runs on
 EXPOSE 3010
-# Define volumes
-VOLUME /data
-VOLUME /config
-VOLUME /logs
 
 # Start the app
 CMD ["python", "app.py"]
