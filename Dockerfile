@@ -1,29 +1,25 @@
-# Use the official Python base image
-FROM python:3.9-slim
+# Use a Python base image
+FROM python:3.9
 
 # Set environment variables
-ENV DATABASE_URL=postgresql://kaizoku:kaizoku@db:5432/kaizoku \
-    KAIZOKU_PORT=3010 \
-    REDIS_HOST=redis \
-    REDIS_PORT=6379 \
-    PUID=99 \
-    PGID=100 \
-    TZ=Europe/Istanbul
+ENV PYTHONUNBUFFERED 1
+ENV DJANGO_SETTINGS_MODULE kaizoku.settings
 
 # Set the working directory in the container
-WORKDIR /app
-
-# Copy the rest of the application code into the container
-COPY . .
-
-# Copy the requirements file into the container at /app
-COPY requirements.txt .
+WORKDIR /code
 
 # Install dependencies
+COPY requirements.txt /code/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port the app runs on
-EXPOSE 3010
+# Copy the project files into the container
+COPY . /code/
 
-# Start the app
-CMD ["python", "app.py"]
+# Collect static files
+RUN python manage.py collectstatic --noinput
+
+# Expose the port the app runs on
+EXPOSE 8000
+
+# Run the Django development server
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
