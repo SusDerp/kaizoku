@@ -12,18 +12,15 @@ ENV DATABASE_URL=postgresql://kaizoku:kaizoku@db:5432/kaizoku \
 
 # Set the working directory in the container
 WORKDIR /app
-# Create directories
-run mkdir /app/data
-run mkdir /app/config
-run mkdir /app/logs
+
 # Copy the requirements file into the container at /app
-COPY requirements.txt /app/
+COPY requirements.txt .
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code into the container
-COPY . /app/
+COPY . .
 
 # Expose the port the app runs on
 EXPOSE 3010
